@@ -155,7 +155,7 @@ podTemplate(
                               --server-dry-run
 
                             if [ -n "${CHANGE_TICKET}" ]; then
-                                set -- "$@" --change-ticket "${CHANGE_TICKET}"
+                                set -- "$@" --ticket "${CHANGE_TICKET}"
                             fi
                             if [ "${DRY_RUN}" = "true" ]; then
                                 set -- "$@" --dry-run
