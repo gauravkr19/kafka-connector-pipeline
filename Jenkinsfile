@@ -6,7 +6,7 @@ def cfg = [
     cloud            : env.KUBERNETES_CLOUD ?: 'kubernetes',
     serviceAccount   : env.JENKINS_AGENT_SERVICE_ACCOUNT ?: 'jenkins',
     jnlpImage        : env.JNLP_IMAGE ?: 'jenkins/inbound-agent:latest-jdk17',
-    gitImage         : env.GIT_IMAGE ?: 'alpine/git:latest',
+    gitImage         : env.GIT_IMAGE ?:  'jenkins/inbound-agent:latest-jdk17',
     imagePullSecret  : env.JENKINS_IMAGE_PULL_SECRET ?: '',
     gitOpsRepoUrl    : env.CONNECTOR_GIT_REPO_URL ?: 'REPLACE_ME',
     gitOpsBranch     : env.CONNECTOR_GIT_BRANCH ?: 'main',
