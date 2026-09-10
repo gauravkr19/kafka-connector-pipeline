@@ -40,8 +40,8 @@ podTemplate(
     cloud: cfg.cloud,
     serviceAccount: cfg.serviceAccount,
     imagePullSecrets: pullSecrets,
-    runAsUser: 1000,
-    runAsGroup: 1000,
+    runAsUser: "1000",
+    runAsGroup: "1000",
     
     containers: [
         containerTemplate(name: 'git', image: cfg.gitImage, command: 'cat', ttyEnabled: true),
