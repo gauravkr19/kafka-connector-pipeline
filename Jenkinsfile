@@ -40,6 +40,9 @@ podTemplate(
     cloud: cfg.cloud,
     serviceAccount: cfg.serviceAccount,
     imagePullSecrets: pullSecrets,
+    runAsUser: 1000,
+    runAsGroup: 1000,
+    
     containers: [
         containerTemplate(name: 'git', image: cfg.gitImage, command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'jnlp', image: cfg.jnlpImage, args: '${computer.jnlpmac} ${computer.name}')
