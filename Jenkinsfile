@@ -3,14 +3,14 @@
 
 // Environment-specific values are supplied through Jenkins global/folder environment variables.
 def cfg = [
-    cloud            : env.KUBERNETES_CLOUD ?: 'kubernetes',
-    serviceAccount   : env.JENKINS_AGENT_SERVICE_ACCOUNT ?: 'jenkins',
-    jnlpImage        : env.JNLP_IMAGE ?: 'jenkins/inbound-agent:latest-jdk17',
-    gitImage         : env.GIT_IMAGE ?:  'jenkins/inbound-agent:latest-jdk17',
-    imagePullSecret  : env.JENKINS_IMAGE_PULL_SECRET ?: '',
-    gitOpsRepoUrl    : env.CONNECTOR_GIT_REPO_URL ?: 'REPLACE_ME',
-    gitOpsBranch     : env.CONNECTOR_GIT_BRANCH ?: 'main',
-    gitCredentialsId : env.CONNECTOR_GIT_CREDENTIALS_ID ?: 'connector-git-ssh'
+    cloud            : (env.KUBERNETES_CLOUD ?: 'kubernetes').trim,
+    serviceAccount   : (env.JENKINS_AGENT_SERVICE_ACCOUNT ?: 'jenkins').trim,
+    jnlpImage        : (env.JNLP_IMAGE ?: 'jenkins/inbound-agent:latest-jdk17').trim,
+    gitImage         : (env.GIT_IMAGE ?: 'jenkins/inbound-agent:latest-jdk17').trim,
+    imagePullSecret  : (env.JENKINS_IMAGE_PULL_SECRET ?: '').trim,
+    gitOpsRepoUrl    : (env.CONNECTOR_GIT_REPO_URL ?: 'REPLACE_ME').trim,
+    gitOpsBranch     : (env.CONNECTOR_GIT_BRANCH ?: 'main').trim,
+    gitCredentialsId : (env.CONNECTOR_GIT_CREDENTIALS_ID ?: 'connector-git-ssh').trim
 ]
 
 properties([
