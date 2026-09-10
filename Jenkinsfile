@@ -5,7 +5,7 @@ def cfg = [
     cloud                    : env.KUBERNETES_CLOUD ?: 'kubernetes',
     serviceAccount           : env.JENKINS_AGENT_SERVICE_ACCOUNT ?: 'jenkins',
     jnlpImage                : env.JNLP_IMAGE ?: 'jenkins/inbound-agent:latest-jdk17',
-    gitImage                 : env.GIT_IMAGE ?: 'alpine/git:latest',
+    gitImage                 : env.GIT_IMAGE ?: 'jenkins/inbound-agent:latest-jdk17',
     goImage                  : env.GO_IMAGE ?: 'golang:1.27',
     runtimeImage             : env.CONNECTORCTL_RUNTIME_IMAGE ?: 'bitnami/kubectl:latest',
     imagePullSecret          : env.JENKINS_IMAGE_PULL_SECRET ?: '',
@@ -44,6 +44,9 @@ podTemplate(
     cloud: cfg.cloud,
     serviceAccount: cfg.serviceAccount,
     imagePullSecrets: pullSecrets,
+    runAsUser: "1000",
+    runAsGroup: "1000",
+
     containers: [
         containerTemplate(name: 'git', image: cfg.gitImage, command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'go', image: cfg.goImage, command: 'cat', ttyEnabled: true),
