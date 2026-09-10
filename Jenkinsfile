@@ -98,6 +98,14 @@ podTemplate(
                 dir('connectorctl') {
                     sh '''
                         set -eu
+
+                        export HOME=/tmp
+                        export GOCACHE=/tmp/go-build
+                        export GOPATH=/tmp/go
+                        export GOMODCACHE=/tmp/go/pkg/mod
+
+                        mkdir -p "$GOCACHE" "$GOMODCACHE" bin
+
                         CGO_ENABLED=0 go build -o bin/connectorctl ./cmd/connectorctl
                         ./bin/connectorctl --help >/dev/null
                     '''
