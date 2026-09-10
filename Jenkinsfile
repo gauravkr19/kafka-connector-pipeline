@@ -157,8 +157,8 @@ podTemplate(
                             if [ -n "${CHANGE_TICKET}" ]; then
                                 set -- "$@" --ticket "${CHANGE_TICKET}"
                             fi
-                            if [ "${DRY_RUN}" = "true" ]; then
-                                set -- "$@" --dry-run
+                            if [ "${DRY_RUN}" != "true" ]; then
+                                set -- "$@" --write
                             fi
                             "$@"
 
