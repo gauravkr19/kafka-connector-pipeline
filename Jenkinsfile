@@ -154,10 +154,11 @@ podTemplate(
                               --validate-live \
                               --server-dry-run
 
-                            if [ -n "${CHANGE_TICKET}" ]; then
+                            if [ -n "${CHANGE_TICKET:-}" ]; then
                                 set -- "$@" --ticket "${CHANGE_TICKET}"
                             fi
-                            if [ "${DRY_RUN}" != "true" ]; then
+
+                            if [ "${DRY_RUN:-true}" != "true" ]; then
                                 set -- "$@" --write
                             fi
                             "$@"
@@ -178,10 +179,10 @@ podTemplate(
                               --validate-live \
                               --server-dry-run
 
-                            if [ -n "${CHANGE_TICKET}" ]; then
+                            if [ -n "${CHANGE_TICKET:-}" ]; then
                                 set -- "$@" --ticket "${CHANGE_TICKET}"
                             fi
-                            if [ "${DRY_RUN}" != "true" ]; then
+                            if [ "${DRY_RUN:-true}" != "true" ]; then
                                 set -- "$@" --write
                             fi
                             # --check-live defaults to true in connectorctl; no flag needed.
