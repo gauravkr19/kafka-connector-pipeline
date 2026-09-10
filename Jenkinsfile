@@ -77,14 +77,15 @@ podTemplate(
         }
 
         stage("${params.OPERATION} Connector YAML") {
-            def target = helper.connectorPath(
-                params.PHYSICAL_CLUSTER,
-                params.LOGICAL_ENV,
-                params.CLASS_FOLDER,
-                params.CONNECTOR_NAME
-            )
-
-            dir('gitops') {
+            container('git') {
+                dir('gitops') {
+                    def target = helper.connectorPath(
+                        params.PHYSICAL_CLUSTER,
+                        params.LOGICAL_ENV,
+                        params.CLASS_FOLDER,
+                        params.CONNECTOR_NAME
+                    )
+            
                 if (params.OPERATION == 'CREATE') {
                     if (fileExists(target)) {
                         error("CREATE rejected: ${target} already exists. Use UPDATE.")
@@ -108,7 +109,9 @@ podTemplate(
                 else {
                     error("Unsupported OPERATION: ${params.OPERATION}")
                 }
+                
             }
+          }
         }
 
         stage('Review Git Diff') {
