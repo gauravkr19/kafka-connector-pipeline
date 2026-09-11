@@ -130,7 +130,7 @@ podTemplate(
                         "LOGICAL_ENV=${params.LOGICAL_ENV}",
                         "TARGET_PHYSICAL_CLUSTER=${params.TARGET_PHYSICAL_CLUSTER ?: ''}",
                         "TARGET_LOGICAL_ENV=${params.TARGET_LOGICAL_ENV ?: ''}",
-                        "KUBECTL_BIN=${env.KUBECTL_BIN ?: 'kubectl'}"
+                        "KUBECTL_BIN=${env.KUBECTL_BIN ?: 'kubectl'}",
                         "CONCURRENCY=${params.CONCURRENCY}",
                         "CHANGE_TICKET=${params.CHANGE_TICKET ?: ''}",
                         "DRY_RUN=${params.DRY_RUN}",
