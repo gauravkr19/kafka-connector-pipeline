@@ -130,6 +130,7 @@ podTemplate(
                         "LOGICAL_ENV=${params.LOGICAL_ENV}",
                         "TARGET_PHYSICAL_CLUSTER=${params.TARGET_PHYSICAL_CLUSTER ?: ''}",
                         "TARGET_LOGICAL_ENV=${params.TARGET_LOGICAL_ENV ?: ''}",
+                        "KUBECTL_BIN=${env.KUBECTL_BIN ?: 'kubectl'}"
                         "CONCURRENCY=${params.CONCURRENCY}",
                         "CHANGE_TICKET=${params.CHANGE_TICKET ?: ''}",
                         "DRY_RUN=${params.DRY_RUN}",
@@ -153,6 +154,7 @@ podTemplate(
                             set -- "${BIN}" \
                               --config-dir "${CONFIG_DIR}" \
                               --repo-root "${REPO_ROOT}" \
+                              --kubectl-bin "${KUBECTL_BIN}" \
                               adopt \
                               --cluster "${PHYSICAL_CLUSTER}" \
                               --env "${LOGICAL_ENV}" \
