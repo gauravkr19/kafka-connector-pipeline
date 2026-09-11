@@ -19,7 +19,7 @@ properties([
     parameters([
         choice(name: 'OPERATION', choices: ['', 'CREATE', 'UPDATE', 'DELETE'], description: 'Connector GitOps operation'),
         choice(name: 'PHYSICAL_CLUSTER', choices: ['', 'poc', 'dev', 'preprod'], description: 'Physical Kafka cluster'),
-        choice(name: 'LOGICAL_ENV', choices: ['', 'lab', 'dev', 'sit', 'sys', 'e2e', 'e2e2', 'prf', 'reg', 'pps', 'ide'], description: 'Logical environment'),
+        choice(name: 'LOGICAL_ENV', choices: ['', 'lab', 'lab2', 'dev','sit', 'sys', 'e2e', 'e2e2', 'prf', 'reg', 'pps', 'ide'], description: 'Logical environment'),
         string(name: 'CLASS_FOLDER', defaultValue: '', description: 'Git folder for connector class, for example postgres or oracle'),
         string(name: 'CONNECTOR_NAME', defaultValue: '', description: 'CFK Connector metadata.name and YAML filename'),
         text(name: 'CONNECTOR_YAML', defaultValue: '', description: 'Complete CFK Connector YAML. Required for CREATE and UPDATE; ignored for DELETE.'),
