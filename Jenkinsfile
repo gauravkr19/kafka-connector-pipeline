@@ -9,10 +9,10 @@ def cfg = [
     goImage                  : env.GO_IMAGE ?: 'golang:1.27',
     runtimeImage             : env.CONNECTORCTL_RUNTIME_IMAGE ?: 'bitnami/kubectl:latest',
     imagePullSecret          : env.JENKINS_IMAGE_PULL_SECRET ?: '',
-    gitOpsRepoUrl            : env.CONNECTOR_GIT_REPO_URL ?: 'REPLACE_ME',
+    gitOpsRepoUrl            : env.CONNECTOR_GIT_REPO_URL ?: 'git@github.com:gauravkr19/kafka-connector-gitops.git',
     gitOpsBranch             : env.CONNECTOR_GIT_BRANCH ?: 'main',
     gitCredentialsId         : env.CONNECTOR_GIT_CREDENTIALS_ID ?: 'connector-git-ssh',
-    connectorctlRepoUrl      : env.CONNECTORCTL_REPO_URL ?: 'REPLACE_ME',
+    connectorctlRepoUrl      : env.CONNECTORCTL_REPO_URL ?: 'git@github.com:gauravkr19/kafka-connectorctl.git',
     connectorctlBranch       : env.CONNECTORCTL_BRANCH ?: 'main',
     connectorctlCredentialsId: env.CONNECTORCTL_GIT_CREDENTIALS_ID ?: (env.CONNECTOR_GIT_CREDENTIALS_ID ?: 'connector-git-ssh')
 ]
@@ -117,17 +117,24 @@ podTemplate(
             writeFile file: 'connector-names.txt', text: connectorNames.join('\n') + '\n'
 
             container('runtime') {
-                withEnv([
-                    "OPERATION=${params.OPERATION}",
-                    "PHYSICAL_CLUSTER=${params.PHYSICAL_CLUSTER}",
-                    "LOGICAL_ENV=${params.LOGICAL_ENV}",
-                    "TARGET_PHYSICAL_CLUSTER=${params.TARGET_PHYSICAL_CLUSTER ?: ''}",
-                    "TARGET_LOGICAL_ENV=${params.TARGET_LOGICAL_ENV ?: ''}",
-                    "CONCURRENCY=${params.CONCURRENCY}",
-                    "CHANGE_TICKET=${params.CHANGE_TICKET ?: ''}",
-                    "DRY_RUN=${params.DRY_RUN}",
-                    "WORKSPACE_ROOT=${pwd()}"
-                ]) {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'kafka-poc-rest',
+                        usernameVariable: 'CONNECT_POC_USER',
+                        passwordVariable: 'CONNECT_POC_PASSWORD'
+                    )
+                ]) {           
+                    withEnv([
+                        "OPERATION=${params.OPERATION}",
+                        "PHYSICAL_CLUSTER=${params.PHYSICAL_CLUSTER}",
+                        "LOGICAL_ENV=${params.LOGICAL_ENV}",
+                        "TARGET_PHYSICAL_CLUSTER=${params.TARGET_PHYSICAL_CLUSTER ?: ''}",
+                        "TARGET_LOGICAL_ENV=${params.TARGET_LOGICAL_ENV ?: ''}",
+                        "CONCURRENCY=${params.CONCURRENCY}",
+                        "CHANGE_TICKET=${params.CHANGE_TICKET ?: ''}",
+                        "DRY_RUN=${params.DRY_RUN}",
+                        "WORKSPACE_ROOT=${pwd()}"
+                    ]) {
                     sh '''
                         set -eu
 
@@ -192,6 +199,7 @@ podTemplate(
                             exit 2
                         fi
                     '''
+                   }
                 }
             }
         }
